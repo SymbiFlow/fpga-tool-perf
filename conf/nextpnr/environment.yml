@@ -10,6 +10,7 @@ dependencies:
   - litex-hub::nextpnr-xilinx=v0.0_2814_gd40ffba7=20201216_065815
   - litex-hub::prjxray-db=v0.0_245_ge7663ba=20210209_144911
   - litex-hub::prjxray-tools=0.1_2697_g0f939808=20201120_145821
+  - litex-hub::verible
   - libboost=1.73.0
   # swig is required to build the rapidyaml package
   # It can be removed once that is available in PyPi
