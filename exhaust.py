@@ -60,6 +60,7 @@ def print_summary_table(
             'Build N.', 'Options'
         ]
     ]
+    table2_data = table_data.copy()
     passed = failed = 0
     build_status = True
     build_count = 0
@@ -82,15 +83,18 @@ def print_summary_table(
             continue
         if board and row[4] not in board:
             continue
+        row2 = row.copy()
 
         # Check if metadata was generated
         # It is created for successful builds only
         if os.path.exists(os.path.join(root_dir, out_prefix, build,
                                        'meta.json')):
             row.append(Color('{autogreen}passed{/autogreen}'))
+            row2.append('passed')
             passed += 1
         else:
             row.append(Color('{autored}failed{/autored}'))
+            row2.append('failed')
             failed += 1
             if (row[0], row[1], row[4]) in required_task_list:
                 build_status = False
@@ -98,6 +102,7 @@ def print_summary_table(
                     "{} {} {}".format(row[0], row[1], row[4])
                 )
         table_data.append(row)
+        table2_data.append(row2)
         build_count += 1
 
     table_data.append(
@@ -111,6 +116,19 @@ def print_summary_table(
     table = AsciiTable(table_data)
     table.inner_footing_row_border = True
     print(table.table)
+
+    table2_data.append(
+        [
+            'Total Runs:', build_count, 'Passed:', passed, 'Failed:', failed,
+            '', '', '{}%'.
+            format(int(passed / build_count * 100) if build_count != 0 else 0)
+        ]
+    )
+    table2 = AsciiTable(table2_data)
+    table2.inner_footing_row_border = True
+    with open(os.path.join(out_prefix, 'exhaust_output.txt'), 'wt') as f:
+        f.write(table2.table)
+        f.close()
 
     return build_status, failed_required_tests
 
