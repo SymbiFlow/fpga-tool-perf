@@ -20,7 +20,8 @@ jobs:
 
     - name: Check formatting
       run: |
-        pip install yapf
+        make env
+        source env.sh
         make format
         test $(git status --porcelain | wc -l) -eq 0 || { git diff; false;  }
 

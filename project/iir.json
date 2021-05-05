@@ -1,14 +1,17 @@
 {
-    "srcs": [
-        "src/iir/iir.v"
-        ],
-    "top": "top",
-    "name": "iir",
     "clocks": {
         "clk": 10.0
     },
+    "name": "iir",
+    "required_toolchains": [],
+    "srcs": [
+        "src/iir/iir.v"
+    ],
+    "top": "top",
     "vendors": {
-        "quicklogic": ["chandalar", "quickfeather"]
-    },
-    "required_toolchains": []
+        "quicklogic": [
+            "chandalar",
+            "quickfeather"
+        ]
+    }
 }
